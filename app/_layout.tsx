@@ -17,10 +17,13 @@ export default function RootLayout() {
   if (!loaded || error) {
     return null;
   }
-  return <Stack
-    screenOptions={{
-      title: "Welcome to Native Class One",
-      headerShown: false
-    }}
-  />;
+  return (
+    <Stack>
+      <Stack.Screen name="(tabs)" options={{
+        title: "Tabs",
+        headerShown: false,
+        headerTintColor: "red"
+      }} />
+    </Stack>
+  );
 }

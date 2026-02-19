@@ -36,6 +36,6 @@ export default function FlatListComponent() {
 }
 const styles = StyleSheet.create({
     contenedor: {
-        flex: 0.8
+        flex: 1
     }
 })
