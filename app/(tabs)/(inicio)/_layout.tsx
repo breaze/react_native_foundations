@@ -4,18 +4,16 @@ export default function HomeLayout() {
     return (
         <Stack
             screenOptions={{
-                headerShown: true,
+                headerShown: false,
                 headerTitle: "",
             }}
         >
             <Stack.Screen name="index"
-                options={{
-                    headerShown: false,
-                }}
+
             />
             <Stack.Screen name="ComponenteInternoComponent"
                 options={{
-                    headerShown: false,
+                    headerShown: true,
                 }}
             />
         </Stack>
