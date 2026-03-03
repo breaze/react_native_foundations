@@ -1,16 +1,27 @@
-import { Image, ImageSourcePropType, StyleSheet, Text, View } from "react-native";
-
+import { Link } from 'expo-router';
+import { Image, ImageSourcePropType, Pressable, StyleSheet, Text, View } from "react-native";
 export default function PeliculaComponent(props: { titulo: string, clave: string, imagen: ImageSourcePropType }) {
     return (
         <View style={styles.contenedor}>
-            <View style={styles.contenedorImagen}>
-                <Image
-                    style={styles.imagen}
-                    source={props.imagen}
-                />
-            </View>
-            <Text style={styles.titulo}>{props.titulo}</Text>
-        </View>
+            <Link
+                href={{
+                    pathname: "(peliculas)/[id]" as any,
+                    params: { id: props.clave, titulo: props.titulo }
+                }}
+                asChild
+            >
+                <Pressable>
+                    <View style={styles.contenedorImagen}>
+                        <Image
+                            style={styles.imagen}
+                            source={props.imagen}
+                        />
+                    </View>
+                    <Text style={styles.titulo}>{props.titulo}</Text>
+                </Pressable>
+            </Link>
+
+        </View >
     );
 }
 

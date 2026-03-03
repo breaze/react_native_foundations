@@ -36,6 +36,7 @@ export default function FlatListComponent() {
 }
 const styles = StyleSheet.create({
     contenedor: {
+        marginTop: 60,
         flex: 1
     }
 })

@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 export default function TabsLayout() {
     return (
@@ -21,6 +21,13 @@ export default function TabsLayout() {
                 options={{
                     title: "Segundo",
                     tabBarIcon: ({ color }) => <Ionicons name="list" size={24} color={color} />
+                }}
+            />
+            <Tabs.Screen
+                name="(peliculas)"
+                options={{
+                    title: "Peliculas",
+                    tabBarIcon: ({ color }) => <MaterialIcons name="local-movies" size={24} color={color} />
                 }}
             />
         </Tabs>
