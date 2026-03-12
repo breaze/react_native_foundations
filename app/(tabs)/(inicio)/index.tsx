@@ -30,6 +30,13 @@ export default function Index() {
       >
         <Text>Modal</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => router.push("/PostComponent")}
+      >
+        <Text
+          style={styles.postButton}
+        >Post</Text>
+      </TouchableOpacity>
       <Modal
         visible={visible}
         transparent={true}
@@ -78,5 +85,8 @@ const styles = StyleSheet.create({
     margin: 10,
     borderColor: 'black',
     borderWidth: 1
+  },
+  postButton: {
+    fontSize: 40
   }
 });

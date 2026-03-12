@@ -9,6 +9,7 @@ export default function PeliculaDetalle() {
     useFocusEffect(
         useCallback(() => {
             return () => {
+
                 if (navigation.canGoBack()) {
                     navigation.dispatch(StackActions.popToTop());
                 }

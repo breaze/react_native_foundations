@@ -85,7 +85,7 @@ export default function FormularioComponent() {
                             autoCapitalize="none"
                             value={formulario.password}
                             onChangeText={(valor) => handleInput('password', valor)}
-                        />u
+                        />
                         <TextInput
                             style={[styles.input, errores.numero && styles.inputError]}
                             placeholder="Numero"
