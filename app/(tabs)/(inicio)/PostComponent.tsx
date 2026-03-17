@@ -1,5 +1,9 @@
+import { CrearAutorInDTO } from '@/src/dtos/CrearAutorInDTO';
+import { CrearAutoOutDTO } from '@/src/dtos/CrearAutorOutDTO';
+import { apiClient } from '@/src/services/ApiClient';
 import axios from 'axios';
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+
 export default function PostComponent() {
     const API = process.env.EXPO_PUBLIC_API_BIBLIOTECA;
     const hacerPost = async () => {
@@ -35,12 +39,25 @@ export default function PostComponent() {
         }
     }
 
+    const hacerPost3 = async () => {
+        try {
+            const autor: CrearAutorInDTO = {
+                nombre: "Ronald",
+                nacionalidad: "Italiano"
+            }
+            const response = await apiClient.post<CrearAutoOutDTO, CrearAutorInDTO>(`${API}/autores`, autor, true);
+
+        } catch (error) {
+            console.log("Error al guardar el autor:", error);
+        }
+    }
+
     return (
         <View
             style={styles.postContainer}
         >
             <TouchableOpacity
-                onPress={hacerPost2}
+                onPress={hacerPost3}
             >
                 <Text>Crear autor</Text>
             </TouchableOpacity>
