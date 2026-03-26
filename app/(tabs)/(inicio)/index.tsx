@@ -1,3 +1,9 @@
+import { useAuth } from "@/src/context/AuthContext";
+import { LoginInDTO } from "@/src/dtos/LoginInDTO";
+import { LoginOutDTO } from "@/src/dtos/LoginOutDTO";
+import { apiClient } from "@/src/services/ApiClient";
+import { asyncStorageService } from "@/src/services/AsyncStorageService";
+import { secureStoreService } from "@/src/services/SecurestoreService";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
@@ -5,6 +11,39 @@ export default function Index() {
   const router = useRouter();
   const [visible, setVisible] = useState(false);
   const [nombre, setNombre] = useState('');
+  const [storageResult, setStorageResult] = useState<string | null>(null);
+  const [secureStore, setSecureStore] = useState<string | null>(null);
+  const STORAGE_KEY = "prueba_async";
+  const { logout } = useAuth();
+
+  const handleLogin = async () => {
+    const body: LoginInDTO = {
+      username: "simon",
+      password: "admin123"
+    }
+    const response = await apiClient.post<LoginOutDTO, LoginInDTO>("/auth/login", body, false);
+    await secureStoreService.set<LoginOutDTO>("auth_session", response);
+    const saved = await secureStoreService.get<LoginOutDTO>("auth_session");
+    setSecureStore(saved ? saved.token : null);
+
+  }
+
+  const handleSet = async () => {
+    await asyncStorageService.set(STORAGE_KEY, "Hola desde el AsyncStorage");
+    setStorageResult("Valor guardado");
+  }
+
+  const handleGet = async () => {
+    const value = await asyncStorageService.get<string>(STORAGE_KEY);
+    if (value === null) return;
+    setStorageResult(value);
+  }
+
+  const handleClean = async () => {
+    await asyncStorageService.clear();
+    setStorageResult("Async Storage Limpio");
+  }
+
   return (
     <View
       style={{
@@ -61,8 +100,19 @@ export default function Index() {
         </View>
       </Modal>
       <Text>{nombre}</Text>
+      <Text style={{ fontSize: 40 }}>Async Storage</Text>
+      <TouchableOpacity onPress={handleSet}><Text style={{ fontSize: 30 }}>Guardar</Text></TouchableOpacity>
+      <TouchableOpacity onPress={handleGet}><Text style={{ fontSize: 30 }}>Obtener</Text></TouchableOpacity>
+      <TouchableOpacity onPress={handleClean}><Text style={{ fontSize: 30 }}>Limpiar</Text></TouchableOpacity>
+      {storageResult && <Text style={{ fontSize: 30 }}> {storageResult}</Text>}
 
-    </View>
+      <Text style={{ fontSize: 40 }}>Secure Storage</Text>
+      <TouchableOpacity onPress={handleLogin}><Text style={{ fontSize: 30 }}>Iniciar sesion</Text></TouchableOpacity>
+      {secureStore && <Text style={{ fontSize: 30 }}> {secureStore}</Text>}
+      <TouchableOpacity onPress={logout}>
+        <Text>Cerrar sesion</Text>
+      </TouchableOpacity>
+    </View >
   );
 }
 
